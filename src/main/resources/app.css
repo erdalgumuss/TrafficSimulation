@@ -1,0 +1,50 @@
+/* ===== Genel Stil ===== */
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: #f5f5f5;
+}
+
+/* ===== Başlıklar ===== */
+.label.title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+/* ===== Panel Kutuları ===== */
+.panel {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 10;
+    -fx-spacing: 10;
+}
+
+/* ===== LightState renkleri ===== */
+.label.light-green {
+    -fx-text-fill: #4CAF50;
+    -fx-font-weight: bold;
+}
+
+.label.light-red {
+    -fx-text-fill: #F44336;
+    -fx-font-weight: bold;
+}
+
+.label.light-yellow {
+    -fx-text-fill: #FFC107;
+    -fx-font-weight: bold;
+}
+
+/* ===== Butonlar ===== */
+.button {
+    -fx-background-color: #2196F3;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+}
+
+.button:hover {
+    -fx-background-color: #1976D2;
+}
