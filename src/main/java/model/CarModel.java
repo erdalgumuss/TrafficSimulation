@@ -6,8 +6,9 @@ public enum CarModel {
     SUV("suv_Car.png", 34, 58, 90,             1.1, 1.8),   // %33 büyütme
     SPORT("sport_Car.png", 54, 27, 180,          1.5, 2.5),   // %50 büyütme
     COUPE("coupe_Car.png", 27, 50, -90,        1.3, 2.1),   // %50 büyütme
-    F1("f1_Car.png", 18, 57, -90,               3.5, 5.2),   // %50 büyütme
-    BUS("bus_Car.png", 80, 22, 0,              0.8, 1.4);   // Ağır araç
+//    F1("f1_Car.png", 18, 57, -90,               3.5, 5.2),   // %50 büyütme
+//    BUS("bus_Car.png", 80, 22, 0,              0.8, 1.4)
+;   // Ağır araç
 
     private final String imageFile;
     private final double width;

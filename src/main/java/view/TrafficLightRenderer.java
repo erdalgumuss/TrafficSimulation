@@ -14,24 +14,40 @@ public class TrafficLightRenderer {
             LightState state = controller.getState(dir);
             double[] pos = SimConstants.LIGHT_POSITIONS.get(dir);
 
-            drawLight(gc, pos[0], pos[1], state);
+            drawThreeLight(gc, pos[0], pos[1], state);
         }
     }
 
-    private static void drawLight(GraphicsContext gc, double x, double y, LightState state) {
+    private static void drawThreeLight(GraphicsContext gc, double x, double y, LightState state) {
+        // Işık kutusu çizimi (isteğe bağlı)
+        gc.setFill(Color.DARKGRAY);
+        gc.fillRect(x, y, 20, 60); // 3 lambaya uygun dikdörtgen
+
+        // Her ampulün konumu (3 daire)
+        drawCircle(gc, x + 3, y + 3, getColor(state, LightState.RED));
+        drawCircle(gc, x + 3, y + 23, getColor(state, LightState.YELLOW));
+        drawCircle(gc, x + 3, y + 43, getColor(state, LightState.GREEN));
+    }
+
+    private static void drawCircle(GraphicsContext gc, double x, double y, Color color) {
+        gc.setFill(color);
+        gc.fillOval(x, y, 14, 14);
+
         gc.setStroke(Color.BLACK);
-        gc.setLineWidth(2);
-        gc.strokeRect(x, y, 20, 20); // dış kutu
+        gc.setLineWidth(1);
+        gc.strokeOval(x, y, 14, 14);
+    }
 
+    private static Color getColor(LightState current, LightState target) {
+        return current == target ? getActiveColor(target) : Color.LIGHTGRAY;
+    }
+
+    private static Color getActiveColor(LightState state) {
         switch (state) {
-            case RED:
-                gc.setFill(Color.RED); break;
-            case YELLOW:
-                gc.setFill(Color.YELLOW); break;
-            case GREEN:
-                gc.setFill(Color.LIMEGREEN); break;
+            case RED: return Color.RED;
+            case YELLOW: return Color.GOLD;
+            case GREEN: return Color.LIMEGREEN;
+            default: return Color.TRANSPARENT;
         }
-
-        gc.fillOval(x + 3, y + 3, 14, 14); // ışığın kendisi
     }
 }

@@ -10,10 +10,10 @@ public class SimConstants {
     // 🧭 Kavşağa girişte bekleme koordinatları (hayali ışık noktaları)
     public static final Map<Direction, Double> LIGHT_BOUNDARIES = new EnumMap<>(Direction.class);
     static {
-        LIGHT_BOUNDARIES.put(Direction.EAST, 300.0);   // x koordinatı
-        LIGHT_BOUNDARIES.put(Direction.WEST, 500.0);
-        LIGHT_BOUNDARIES.put(Direction.NORTH, 350.0);  // y koordinatı
-        LIGHT_BOUNDARIES.put(Direction.SOUTH, 250.0);
+        LIGHT_BOUNDARIES.put(Direction.EAST, 250.0);   // x koordinatı
+        LIGHT_BOUNDARIES.put(Direction.WEST, 550.0);
+        LIGHT_BOUNDARIES.put(Direction.NORTH, 400.0);  // y koordinatı
+        LIGHT_BOUNDARIES.put(Direction.SOUTH, 180.0);
     }
 
     // ⏱️ Araç sabitleri
@@ -39,7 +39,7 @@ public class SimConstants {
     public static final Map<Direction, double[]> LANE_CENTER = new EnumMap<>(Direction.class);
     static {
         LANE_CENTER.put(Direction.EAST, new double[]{295, 310});   // y aralığı
-        LANE_CENTER.put(Direction.WEST, new double[]{255, 270});
+        LANE_CENTER.put(Direction.WEST, new double[]{225, 240});
         LANE_CENTER.put(Direction.NORTH, new double[]{410, 430});  // x aralığı
         LANE_CENTER.put(Direction.SOUTH, new double[]{340, 360});
     }
@@ -53,10 +53,10 @@ public class SimConstants {
     }
     public static final Map<Direction, double[]> LIGHT_POSITIONS = new EnumMap<>(Direction.class);
     static {
-        LIGHT_POSITIONS.put(Direction.NORTH, new double[]{500, 350}); // x, y
-        LIGHT_POSITIONS.put(Direction.SOUTH, new double[]{280, 220});
-        LIGHT_POSITIONS.put(Direction.EAST,  new double[]{280, 350});
-        LIGHT_POSITIONS.put(Direction.WEST,  new double[]{500, 220});
+        LIGHT_POSITIONS.put(Direction.NORTH, new double[]{550, 400}); // x, y
+        LIGHT_POSITIONS.put(Direction.SOUTH, new double[]{235, 130});
+        LIGHT_POSITIONS.put(Direction.EAST,  new double[]{235, 400});
+        LIGHT_POSITIONS.put(Direction.WEST,  new double[]{550, 130});
     }
 
 }
