@@ -32,7 +32,8 @@ public class Vehicle {
         }
 
         // Sahneden çıkarsa pasif yapılır
-        if (x < -50 || x > 850 || y < -50 || y > 650) {
+        if (x < -150 || x > 950 || y < -150 || y > 750)
+        {
             active = false;
         }
     }

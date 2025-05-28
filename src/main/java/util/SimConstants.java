@@ -26,8 +26,8 @@ public class SimConstants {
     public static final double VEHICLE_GAP = 40;
 
     // 🖼️ Sahne boyutu
-    public static final double SCENE_WIDTH = 1200;
-    public static final double SCENE_HEIGHT = 900;
+    public static final double SCENE_WIDTH = 800;
+    public static final double SCENE_HEIGHT = 750;
 
     public static final double PANEL_WIDTH = 320; // Sol panel genişliği
 
@@ -46,10 +46,10 @@ public class SimConstants {
     // Şerit girişleri araç doğması için
     public static final Map<Direction, double[]> ENTRY_POINTS = new EnumMap<>(Direction.class);
     static {
-        ENTRY_POINTS.put(Direction.EAST, new double[]{0, 320});        // x, y
-        ENTRY_POINTS.put(Direction.WEST, new double[]{800, 270});
-        ENTRY_POINTS.put(Direction.NORTH, new double[]{420, 600});
-        ENTRY_POINTS.put(Direction.SOUTH, new double[]{360, 0});
+        ENTRY_POINTS.put(Direction.EAST, new double[]{-50, 320});        // x, y
+        ENTRY_POINTS.put(Direction.WEST, new double[]{850, 270});
+        ENTRY_POINTS.put(Direction.NORTH, new double[]{420, 650});
+        ENTRY_POINTS.put(Direction.SOUTH, new double[]{360, -50});
     }
     public static final Map<Direction, double[]> LIGHT_POSITIONS = new EnumMap<>(Direction.class);
     static {
