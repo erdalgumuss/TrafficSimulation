@@ -12,7 +12,7 @@ public class SimConstants {
     static {
         LIGHT_BOUNDARIES.put(Direction.EAST, 250.0);   // x koordinatı
         LIGHT_BOUNDARIES.put(Direction.WEST, 550.0);
-        LIGHT_BOUNDARIES.put(Direction.NORTH, 400.0);  // y koordinatı
+        LIGHT_BOUNDARIES.put(Direction.NORTH, 400+.0);  // y koordinatı
         LIGHT_BOUNDARIES.put(Direction.SOUTH, 180.0);
     }
 

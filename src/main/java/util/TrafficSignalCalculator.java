@@ -17,27 +17,57 @@ public class TrafficSignalCalculator {
      */
     public static Map<Direction, Integer> calculateGreenDurations(Map<Direction, Integer> vehicleCounts) {
         Map<Direction, Integer> greenDurations = new EnumMap<>(Direction.class);
+        int directionCount = Direction.values().length;
 
         int totalVehicles = vehicleCounts.values().stream().mapToInt(Integer::intValue).sum();
+
+        int totalGreenTime = TOTAL_CYCLE - (directionCount * YELLOW_DURATION);
+
         if (totalVehicles == 0) {
             // Hiç araç yoksa tüm yönlere eşit süre ver
-            int equalGreen = TOTAL_CYCLE / Direction.values().length - YELLOW_DURATION;
+            int equalGreen = totalGreenTime / directionCount;
             for (Direction dir : Direction.values()) {
-                greenDurations.put(dir, clamp(equalGreen));
+                greenDurations.put(dir, equalGreen);
             }
             return greenDurations;
         }
 
-        int totalGreenTime = TOTAL_CYCLE - (Direction.values().length * YELLOW_DURATION);
-
+        // Adım 1: Orantısal olarak süreleri dağıt (clamp edilmeden)
+        Map<Direction, Integer> rawDurations = new EnumMap<>(Direction.class);
         for (Direction dir : Direction.values()) {
             int count = vehicleCounts.getOrDefault(dir, 0);
             double ratio = (double) count / totalVehicles;
-            int green = (int) Math.round(ratio * totalGreenTime);
-            greenDurations.put(dir, clamp(green));
+            int raw = (int) Math.round(ratio * totalGreenTime);
+            rawDurations.put(dir, raw);
         }
 
-        return greenDurations;
+        // Adım 2: Clamp ile min-max sınırlamalarını uygula
+        Map<Direction, Integer> clampedDurations = new EnumMap<>(Direction.class);
+        int clampedSum = 0;
+        for (Direction dir : Direction.values()) {
+            int clamped = clamp(rawDurations.get(dir));
+            clampedDurations.put(dir, clamped);
+            clampedSum += clamped;
+        }
+
+        // Adım 3: Eğer clamp sonrası toplam süre doğru değilse düzelt
+        int diff = totalGreenTime - clampedSum;
+
+        while (diff != 0) {
+            for (Direction dir : Direction.values()) {
+                int current = clampedDurations.get(dir);
+                if (diff > 0 && current < GREEN_MAX) {
+                    clampedDurations.put(dir, current + 1);
+                    diff--;
+                } else if (diff < 0 && current > GREEN_MIN) {
+                    clampedDurations.put(dir, current - 1);
+                    diff++;
+                }
+                if (diff == 0) break;
+            }
+        }
+
+        return clampedDurations;
     }
 
     /**
