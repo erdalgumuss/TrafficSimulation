@@ -2,14 +2,29 @@ package model;
 
 import util.SimConstants;
 
+/**
+ * Vehicle (Araç) sınıfı, trafik simülasyonundaki her bir aracın
+ * yön, hız, konum ve fiziksel özelliklerini tanımlar.
+ * Ayrıca bu sınıf, aracın hareketini ve kavşağa yaklaşma davranışını da yönetir.
+ */
 public class Vehicle {
-    private double x, y;
-    private double speed;
-    private Direction direction;
-    private CarModel model;
-    private boolean active = true;
-    private final double width;
-    private final double height;
+    private double x, y;                // Aracın ekrandaki konumu
+    private double speed;              // Aracın hızı
+    private Direction direction;       // Aracın hareket yönü (NORTH, EAST, vs.)
+    private CarModel model;            // Aracın tipi (sedan, suv vs.)
+    private boolean active = true;     // Araç aktif mi? (ekran dışına çıktıysa false yapılır)
+    private final double width;        // Araç genişliği (modelden alınır)
+    private final double height;       // Araç yüksekliği (modelden alınır)
+
+    /**
+     * Araç nesnesi oluşturur.
+     *
+     * @param direction Aracın yönü
+     * @param speed     Aracın hızı
+     * @param x         Başlangıç X koordinatı
+     * @param y         Başlangıç Y koordinatı
+     * @param model     Araç modeli
+     */
     public Vehicle(Direction direction, double speed, double x, double y, CarModel model) {
         this.direction = direction;
         this.speed = speed;
@@ -18,9 +33,16 @@ public class Vehicle {
         this.model = model;
         this.height = model.getHeight();
         this.width = model.getWidth();
-
     }
 
+    /**
+     * Aracın konumunu günceller.
+     * Hareket edebilme izni varsa, yönüne göre konumu değiştirir.
+     * Eğer araç sahneden çıkmışsa, pasif hale getirilir.
+     *
+     * @param canMove Bu araç hareket edebilir mi?
+     * @param now     Şu anki zaman (nanoseconds)
+     */
     public void updatePosition(boolean canMove, long now) {
         if (!active || !canMove) return;
 
@@ -31,12 +53,13 @@ public class Vehicle {
             case SOUTH: y += speed; break;
         }
 
-        // Sahneden çıkarsa pasif yapılır
-        if (x < -150 || x > 950 || y < -150 || y > 750)
-        {
+        // Araç ekran dışına çıkarsa aktiflik durumu pasif yapılır
+        if (x < -150 || x > 950 || y < -150 || y > 750) {
             active = false;
         }
     }
+
+    // === Get metodları ===
 
     public boolean isActive() {
         return active;
@@ -49,6 +72,13 @@ public class Vehicle {
     public Direction getDirection() { return direction; }
     public CarModel getModel() { return model; }
 
+    /**
+     * Bu araç ile öndeki araç arasındaki mesafeyi hesaplar.
+     * Aynı yönde değillerse sonsuz mesafe döner.
+     *
+     * @param other Öndeki diğer araç
+     * @return Mesafe değeri
+     */
     public double distanceTo(Vehicle other) {
         if (this.direction != other.direction) return Double.MAX_VALUE;
 
@@ -61,6 +91,12 @@ public class Vehicle {
         return Double.MAX_VALUE;
     }
 
+    /**
+     * Araç kavşağa yaklaşmakta mı?
+     * Işık konumuna göre tespit yapılır.
+     *
+     * @return true → yaklaşmakta, false → değil
+     */
     public boolean approachingIntersection() {
         Double boundary = SimConstants.LIGHT_BOUNDARIES.get(direction);
         switch (direction) {

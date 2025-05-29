@@ -1,8 +1,6 @@
 package view;
 
 import controller.TrafficSimulationManager;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -11,25 +9,36 @@ import model.Direction;
 import java.util.EnumMap;
 import java.util.Map;
 
+/**
+ * SimulationControlPanel:
+ * Kullanıcının araç sayılarını girmesini sağlayan ve simülasyonu kontrol eden paneldir.
+ * - Start, Pause, Reset ve Randomize işlevleri içerir.
+ * - Ayrıca maksimum rastgele üretim için slider içerir.
+ */
 public class SimulationControlPanel extends VBox {
 
-    private final Map<Direction, TextField> inputFields = new EnumMap<>(Direction.class);
-    private final MainScene mainScene;
-    private final TrafficObserverPanel observerPanel;
+    private final Map<Direction, TextField> inputFields = new EnumMap<>(Direction.class); // Her yön için giriş kutusu
+    private final MainScene mainScene;                   // Ana sahne referansı
+    private final TrafficObserverPanel observerPanel;    // Bilgilendirme paneli
 
-    private final Slider maxRandomSlider = new Slider(1, 50, 10); // was 20 → now 50
+    private final Slider maxRandomSlider = new Slider(1, 50, 10); // Rastgele üretim için maksimum değer
     private final Label maxLabel = new Label("Max: 50");
 
+    /**
+     * Kontrol paneli kurucu metodu
+     */
     public SimulationControlPanel(MainScene mainScene, TrafficObserverPanel observerPanel) {
         this.mainScene = mainScene;
         this.observerPanel = observerPanel;
 
-        setSpacing(10);
-        setPadding(new Insets(10));
-        setStyle("-fx-background-color: #f0f0f0;");
+        // Panel için stil sınıfı atanıyor
+        this.getStyleClass().add("simulation-control-panel");
 
-        Label title = new Label("Vehicle Density Input");
+        // Başlık etiketi
+        Label title = new Label("🚦 Araç Yoğunluğu Girişi");
+        title.getStyleClass().add("panel-title");
 
+        // Araç sayısı girişleri için grid yapı
         GridPane grid = new GridPane();
         grid.setVgap(5);
         grid.setHgap(10);
@@ -37,43 +46,61 @@ public class SimulationControlPanel extends VBox {
         int row = 0;
         for (Direction dir : Direction.values()) {
             Label label = new Label(dir.name() + ":");
-            TextField field = new TextField("0");
-            inputFields.put(dir, field);
+            label.getStyleClass().add("input-label");
+
+            TextField tf = new TextField("0");
+            tf.getStyleClass().add("input-field");
+
+            inputFields.put(dir, tf);
             grid.add(label, 0, row);
-            grid.add(field, 1, row++);
+            grid.add(tf, 1, row++);
         }
 
-        // Slider ve label
+        // Slider etiketleri ve görünümü
+        Label sliderTitle = new Label("Rastgele Maks:");
+        sliderTitle.getStyleClass().add("input-label");
+        maxLabel.getStyleClass().add("input-label");
+
         maxRandomSlider.setShowTickLabels(true);
         maxRandomSlider.setShowTickMarks(true);
         maxRandomSlider.setMajorTickUnit(10);
         maxRandomSlider.setMinorTickCount(4);
         maxRandomSlider.setSnapToTicks(true);
+        maxRandomSlider.getStyleClass().add("custom-slider");
+
         maxRandomSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
             int max = newVal.intValue();
             maxLabel.setText("Max: " + max);
         });
 
-        HBox sliderBox = new HBox(10, new Label("Random Max:"), maxRandomSlider, maxLabel);
+        HBox sliderBox = new HBox(10, sliderTitle, maxRandomSlider, maxLabel);
 
-        // Butonlar
-        Button startBtn = new Button("Start");
-        Button pauseBtn = new Button("Pause");
-        Button resetBtn = new Button("Reset");
-        Button randomBtn = new Button("Randomize");
+        // Kontrol butonları
+        Button startBtn = new Button(" ▶ ");
+        Button pauseBtn = new Button(" ⏸ ");
+        Button resetBtn = new Button(" ⟳ ");
+        Button randomBtn = new Button(" 🎲 ");
 
+        for (Button btn : new Button[]{startBtn, pauseBtn, resetBtn, randomBtn}) {
+            btn.getStyleClass().add("control-button");
+        }
+
+        // Başlat butonu → simülasyonu kullanıcı verileriyle başlat
         startBtn.setOnAction(e -> handleStart());
 
+        // Pause → toggle pause/resume
         pauseBtn.setOnAction(e -> {
             mainScene.togglePause();
-            pauseBtn.setText(mainScene.isPaused() ? "Resume" : "Pause");
+            pauseBtn.setText(mainScene.isPaused() ? "▶ Resume" : "⏸ Pause");
         });
 
+        // Reset → simülasyonu sıfırla
         resetBtn.setOnAction(e -> {
             mainScene.resetSimulation();
             System.out.println("Simülasyon sıfırlandı.");
         });
 
+        // Randomize → her yöne rastgele sayı ata (slider'a göre)
         randomBtn.setOnAction(e -> {
             int max = (int) maxRandomSlider.getValue();
             for (Direction dir : Direction.values()) {
@@ -82,20 +109,30 @@ public class SimulationControlPanel extends VBox {
             }
         });
 
+        // Butonlar yatay kutusu
         HBox buttons = new HBox(10, startBtn, pauseBtn, resetBtn, randomBtn);
         buttons.setPadding(new Insets(10, 0, 0, 0));
 
+        // Bileşenleri panele ekle
         this.getChildren().addAll(title, grid, sliderBox, buttons);
     }
 
+    /**
+     * Başlat butonuna basıldığında çağrılır.
+     * - TextField'lardan verileri toplar
+     * - Yeni bir TrafficSimulationManager oluşturur
+     * - Simülasyonu başlatır
+     * - Observer panelini bağlar
+     */
     private void handleStart() {
         Map<Direction, Integer> counts = new EnumMap<>(Direction.class);
+
         for (Direction dir : Direction.values()) {
             try {
                 int count = Integer.parseInt(inputFields.get(dir).getText());
                 counts.put(dir, Math.max(0, count));
             } catch (NumberFormatException ex) {
-                counts.put(dir, 0);
+                counts.put(dir, 0); // Hatalı giriş için varsayılan 0
             }
         }
 
