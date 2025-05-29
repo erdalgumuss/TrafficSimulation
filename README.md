@@ -2,7 +2,8 @@
 
 Akıllı Kavşak Yönetimi | BZ214 Visual Programming Proje Ödevi  
 Yoğunluk tabanlı dinamik ışık kontrolü ile gerçek zamanlı araç simülasyonu.
-
+![img.png](img.png)
+![img_1.png](img_1.png)
 ---
 
 ## 📂 Proje Dizini
