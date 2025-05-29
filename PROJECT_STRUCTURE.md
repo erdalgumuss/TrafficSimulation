@@ -101,9 +101,9 @@ suv_Car.png
 
 | Geliştirme | Durum |
 |------------|-------|
-| Araçlara görsel atanması (`CarModel`) | ⏳ Planlandı |
-| Arka plan geometrisinin görselleştirilmesi | ⏳ Planlandı |
-| Işık geçiş efektleri (animasyon) | ⏳ Planlandı |
+| Araçlara görsel atanması (`CarModel`) | ⏳ Planlandı |+
+| Arka plan geometrisinin görselleştirilmesi | ⏳ Planlandı |+
+| Işık geçiş efektleri (animasyon) | ⏳ Planlandı |+
 | `TrafficObserverPanel`: canlı yoğunluk ve bekleme sayısı | 🔄 Geliştiriliyor |
 | Simülasyon loglama (CSV, JSON) | 🔲 Planlandı |
 | Test modülü (JUnit) | 🔲 Planlandı |

@@ -85,6 +85,9 @@ resources/
 
 ## 📌 Kurulum
 
+Zip kök dizini ya da terminalden:
+"git clone https://github.com/erdalgumuss/TrafficSimulation"
+
 ### 1. Gereksinimler
 - Java 17 veya üzeri (JDK 21 önerilir)
 - JavaFX destekli IDE (örneğin IntelliJ IDEA)
@@ -110,7 +113,6 @@ Maven hedefi olarak javafx:run da çalıştırılabilir.
 
 ## 🚧 Planlanan Geliştirmeler
 
-- CarModel üzerinden farklı tip/model görsellerin atanması
 - Kavşak optimizasyonu (dönüşlü akış, öncelik kuralları)
 - Gerçek zamanlı veri girişi ve otomatik yoğunluk simülasyonu
 - Detaylı araç durumu: bekleme süresi, hız profili, yön vb.
