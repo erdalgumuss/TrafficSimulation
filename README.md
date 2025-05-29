@@ -87,18 +87,26 @@ resources/
 ## 📌 Kurulum
 
 ### 1. Gereksinimler
-- JDK 17+
+- Java 17 veya üzeri (JDK 21 önerilir)
 - JavaFX destekli IDE (örneğin IntelliJ IDEA)
-- Maven (otomatik yapı için)
+- Maven 3.6+ (otomatik bağımlılık yönetimi için)
 
 ### 2. Çalıştırma
-
+Terminal veya komut satırından proje dizinine gelip:
 ```bash
 mvn clean javafx:run
 ```
 
 Alternatif: `view.Main.java` dosyasını doğrudan çalıştırabilirsiniz.
+⚠️ Not: Eğer sisteminiz Windows dışı ise pom.xml içindeki <classifier>win</classifier> satırlarını kendi platformunuza göre mac veya linux olarak değiştirin.
+IntelliJ IDEA ile Çalıştırma
+Projeyi açın
 
+pom.xml dosyasını otomatik olarak yükletin
+
+view.Main sınıfına sağ tıklayıp Run 'Main.main()' deyin
+
+Maven hedefi olarak javafx:run da çalıştırılabilir.
 ---
 
 ## 🚧 Planlanan Geliştirmeler
