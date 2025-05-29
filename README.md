@@ -97,7 +97,7 @@ resources/
 mvn clean javafx:run
 ```
 
-Alternatif: `Main.java` dosyasını doğrudan çalıştırabilirsiniz.
+Alternatif: `view.Main.java` dosyasını doğrudan çalıştırabilirsiniz.
 
 ---
 

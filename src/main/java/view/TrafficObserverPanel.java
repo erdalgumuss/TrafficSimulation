@@ -62,15 +62,24 @@ public class TrafficObserverPanel extends VBox {
         for (Direction dir : Direction.values()) {
             LightState state = manager.getLightState(dir);
             int greenDuration = manager.getGreenDurations().getOrDefault(dir, 0);
-            long remaining = manager.getLightController().getRemainingTime(dir, now);
+            long remainingSeconds = manager.getLightController().getRemainingTime(dir, now);
+            remainingSeconds = Math.max(0, remainingSeconds); // Negatif süre varsa sıfırla
 
             stateLabels.get(dir).setText("Durum: " + state.name());
             durationLabels.get(dir).setText("Yeşil Süre: " + greenDuration + "s");
-            remainingLabels.get(dir).setText("Kalan: " + remaining + "s");
+
+            // Aktif faza göre anlamlı etiketle
+            String remainingText = switch (state) {
+                case GREEN -> "Yeşil kalan: ";
+                case YELLOW -> "Sarı kalan: ";
+                case RED -> "Kırmızı kalan: ";
+            };
+            remainingLabels.get(dir).setText(remainingText + remainingSeconds + "s");
 
             applyColorToState(stateLabels.get(dir), state);
         }
     }
+
 
     private void applyColorToState(Label label, LightState state) {
         label.getStyleClass().removeIf(c -> c.startsWith("light-"));

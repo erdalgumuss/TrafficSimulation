@@ -14,7 +14,7 @@ TrafficSimulation/
 │       │   ├── util/                → Sabitler, yardımcı fonksiyonlar
 │       │   ├── view/                → JavaFX render ve UI sınıfları
 │       │   ├── png/                 → Araç görselleri
-│       │   └── Main.java            → Ana uygulama girişi
+│       │   └── view.Main.java            → Ana uygulama girişi
 │       └── resources/
 │           └── app.css              → Stil dosyası
 │

@@ -1,3 +1,5 @@
+package view;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -6,10 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import util.SimConstants;
-import view.MainScene;
-import view.SimulationControlPanel;
-import view.TrafficObserverPanel;
-import view.CustomTitleBar;
+
 public class Main extends Application {
 
     private double xOffset = 0;

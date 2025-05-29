@@ -59,7 +59,7 @@ public class TrafficLight {
      */
     public long getRemainingTime(long now, long startTime) {
         long elapsedSec = (now - startTime) / 1_000_000_000;
-        long cyclePos = elapsedSec % CYCLE_DURATION;
+        long cyclePos = (elapsedSec - phaseOffset + CYCLE_DURATION) % CYCLE_DURATION;
 
         long greenStart = 0;
         long yellowStart = greenStart + greenDuration;
@@ -68,11 +68,12 @@ public class TrafficLight {
         if (cyclePos < greenDuration) {
             return greenDuration - cyclePos;
         } else if (cyclePos < yellowStart + YELLOW_DURATION) {
-            return yellowStart + YELLOW_DURATION - cyclePos;
+            return (yellowStart + YELLOW_DURATION) - cyclePos;
         } else {
             return CYCLE_DURATION - cyclePos;
         }
     }
+
 
     // === Getter ve Setter metodları ===
 
